@@ -5,9 +5,8 @@ import Helmet from "react-helmet"
 
 import Layout from "../components/layout"
 import NavBar from "../components/navBar"
-import Theme from "../components/Theme"
 import Hero from "../components/Hero"
-import Project, { StyledStatus } from " ../components/Project"
+import { Project } from "../components/Project"
 
 const IndexPage = ({ data }) => (
   <>
@@ -25,54 +24,49 @@ const IndexPage = ({ data }) => (
 
     {/* // ? HTML BODY */}
 
-    <Theme>
-      {console.log(data)}
-      <Layout>
-        <NavBar />
-        <Hero />
+    <Layout>
+      <NavBar />
+      <Hero />
 
-        <Project>
-          {data.allSanityPost.edges.map(item => {
-            const {
-              _id,
-              post_name,
-              completed,
-              description,
-              keywords,
-              projectUrl,
-            } = item.node
+      <Project>
+        {data.allSanityPost.edges.map(item => {
+          const {
+            _id,
+            post_name,
+            completed,
+            description,
+            keywords,
+            projectUrl,
+          } = item.node
 
-            return (
-              <Col key={_id} md={6}>
-                <div className="card">
-                  <h4>{post_name}</h4>
-                  <StyledStatus status={completed}>
-                    {completed ? "Completed" : "Pending"}
-                  </StyledStatus>
-                  <p>{description}</p>
-                  <div className="box">
-                    {keywords.map((ele, idx) => (
-                      <span key={idx} className="keywords">
-                        {ele}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="links">
-                    {projectUrl ? (
-                      <a href={projectUrl} target="_blank">
-                        Open Project
-                      </a>
-                    ) : (
-                      <span>Coming Soon..!</span>
-                    )}
-                  </p>
-                </div>
-              </Col>
-            )
-          })}
-        </Project>
-      </Layout>
-    </Theme>
+          return (
+            <div className="card">
+              <h4>{post_name}</h4>
+
+              {completed ? "Completed" : "Pending"}
+
+              <p>{description}</p>
+              <div className="box">
+                {keywords.map((ele, idx) => (
+                  <span key={idx} className="keywords">
+                    {ele}
+                  </span>
+                ))}
+              </div>
+              <p className="links">
+                {projectUrl ? (
+                  <a href={projectUrl} target="_blank">
+                    Open Project
+                  </a>
+                ) : (
+                  <span>Coming Soon..!</span>
+                )}
+              </p>
+            </div>
+          )
+        })}
+      </Project>
+    </Layout>
   </>
 )
 
